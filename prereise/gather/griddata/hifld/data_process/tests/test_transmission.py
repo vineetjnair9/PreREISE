@@ -185,10 +185,40 @@ def test_create_transformers():
         },
         dtype="float",
     )
-    expected_transformers = pd.DataFrame(
-        {"from_bus_id": [0, 2, 4, 5], "to_bus_id": [1, 3, 5, 6]}
+    transformer_designs = pd.DataFrame(
+        {
+            "x": [0.19, 0.07, 0.044, 0.018],
+            "r": [0.01, 0.001, 0.001, 5e-4],
+            "MVA": [60, 250, 280, 580],
+        },
+        index=pd.MultiIndex.from_tuples([(69, 115), (69, 345), (115, 230), (230, 345)]),
     )
-    transformers = create_transformers(bus)
+    lines = pd.DataFrame(
+        [
+            # Two branches to high-voltage side of buses (0, 1) transformer
+            {"from_bus_id": 1, "to_bus_id": 100, "rateA": 100},
+            {"from_bus_id": 1, "to_bus_id": 101, "rateA": 300},
+            # Two branches to low-voltage side of buses (2, 3) transformer
+            {"from_bus_id": 102, "to_bus_id": 2, "rateA": 50},
+            {"from_bus_id": 103, "to_bus_id": 2, "rateA": 100},
+            # One branch to each side of buses (5, 6) transformer
+            # The second of these is also on the high-voltage side of buses (4, 5) xfmr
+            {"from_bus_id": 6, "to_bus_id": 104, "rateA": 500},
+            {"from_bus_id": 5, "to_bus_id": 105, "rateA": 250},
+            # One branch connected to no transformers
+            {"from_bus_id": 998, "to_bus_id": 999, "rateA": 100e3},
+        ]
+    )
+    expected_transformers = pd.DataFrame(
+        {
+            "from_bus_id": [0, 0, 2, 2, 4, 5],
+            "to_bus_id": [1, 1, 3, 3, 5, 6],
+            "x": [0.07, 0.07, 0.19, 0.19, 0.044, 0.018],
+            "r": [0.001, 0.001, 0.01, 0.01, 0.001, 5e-4],
+            "rateA": [250.0, 250.0, 60.0, 60.0, 280.0, 580.0],
+        }
+    )
+    transformers = create_transformers(bus, lines, transformer_designs)
     assert_frame_equal(transformers, expected_transformers)
 
 
