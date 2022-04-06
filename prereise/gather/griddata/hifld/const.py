@@ -114,7 +114,7 @@ blob_paths = {
     "epa_ampd": "https://besciences.blob.core.windows.net/datasets/EPA_AMPD/",
     "epa_needs": "https://besciences.blob.core.windows.net/datasets/EPA_NEEDS/needs-v620_06-30-21-2_active.csv",
     "substations": "https://besciences.blob.core.windows.net/datasets/hifld/Electric_Substations_Apr2022.csv",
-    "transmission_lines": "https://besciences.blob.core.windows.net/datasets/hifld/Electric_Power_Transmission_Lines_Jul2020.geojson.zip",
+    "transmission_lines": "https://besciences.blob.core.windows.net/datasets/hifld/Electric_Power_Transmission_Lines_Apr2022.geojson.zip",
     "us_counties": "https://besciences.blob.core.windows.net/datasets/geo_data/uscounties.csv",
     "us_zips": "https://besciences.blob.core.windows.net/datasets/geo_data/uszips.csv",
 }
