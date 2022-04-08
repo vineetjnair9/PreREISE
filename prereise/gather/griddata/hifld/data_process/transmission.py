@@ -48,7 +48,7 @@ def check_for_location_conflicts(substations):
 
 
 def map_lines_to_substations_using_coords(
-    substations, lines, rounding=3, drop_zero_distance_line=True
+    substations, lines, rounding=3, drop_zero_distance_line=True, max_remap=1e-3
 ):
     """Map lines to substations using coordinates.
 
@@ -57,6 +57,8 @@ def map_lines_to_substations_using_coords(
     :param int rounding: number of digits in coordinates rounded up to.
     :param bool drop_zero_distance_line: drop zero distance line or not, defaults to
         True.
+    :param float max_remap: maximum unit circle secant distance to map line endpoints. A
+        values of 1e-3 is equal to appropriately 5 miles.
     :return: (*tuple*) -- lines and substations data frame.
     :raises TypeError: if rounding is not an integer.
     """
@@ -105,6 +107,32 @@ def map_lines_to_substations_using_coords(
             for e, e_sub in end_sub.items()
         ]
     )
+    tree = KDTree([ll2uv(p[1], p[0]) for p in subcoord])
+
+    # Find points which would get mapped beyond our max distance
+    tree_query_results = [(p, tree.query(ll2uv(p[1], p[0]))) for p in missing_points]
+    to_add_list = [
+        {
+            "LATITUDE": p[0],
+            "LONGITUDE": p[1],
+            "NAME": str(p),
+            "STATE": substations.loc[subcoord2subid[subcoord[closest_idx]][0], "STATE"],
+        }
+        for p, (dist, closest_idx) in tree_query_results
+        if dist > max_remap
+    ]
+    first_new_id = substations.index.max() + 1
+    substations_to_add = pd.DataFrame(
+        to_add_list, index=pd.RangeIndex(first_new_id, first_new_id + len(to_add_list))
+    )
+    print(f"Adding {len(substations_to_add)} new substations for unmapped endpoints")
+    # Append the new ones, then re-generate the mapping
+    substations = pd.concat([substations, substations_to_add])
+    substations.index.name = "ID"
+    subcoord2subid = (
+        substations.round(rounding).groupby(["LATITUDE", "LONGITUDE"]).groups
+    )
+    subcoord = list(subcoord2subid)
     tree = KDTree([ll2uv(p[1], p[0]) for p in subcoord])
     endpoint2neighbor = {
         p: subcoord2subid[subcoord[tree.query(ll2uv(p[1], p[0]))[1]]]
