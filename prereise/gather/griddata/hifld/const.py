@@ -503,6 +503,30 @@ proxy_substations = [
         "NAME": "Strong Cemetary",
         "STATE": "TX",
     },
+    {
+        "LATITUDE": 33.7841,
+        "LONGITUDE": -118.1085,
+        "NAME": "Cal State Long Beach",
+        "STATE": "CA",
+    },
+    {
+        "LATITUDE": 33.6936,
+        "LONGITUDE": -117.8676,
+        "NAME": "SCE Fairview",
+        "STATE": "CA",
+    },
+    {
+        "LATITUDE": 33.6941,
+        "LONGITUDE": -117.8544,
+        "NAME": "Macarthur Blvd and Red Hill Ave",
+        "STATE": "CA",
+    },
+    {
+        "LATITUDE": 33.6755,
+        "LONGITUDE": -117.8629,
+        "NAME": "John Wayne Airport",
+        "STATE": "CA",
+    },
 ]
 
 substations_lines_filter_override = {301995}
@@ -690,6 +714,7 @@ line_design_assumptions = {
     132804: (230, 1, 2),  # Waterford 3 Nuclear Generating Station
     139216: (230, 4, 3),  # Catawba Nuclear Station
     140651: (230, 1, 3),  # Florida Power & Light St. Lucie
+    144276: (230, 4, 3),  # Turkey Point Nuclear Generating Station
     147054: (115, 1, 2),  # RE Ginna Nuclear Power Plant
     158263: (100, 1, 4),  # G. G. Allen Steam Station
     160723: (230, 1, 3),  # Florida Power & Light St. Lucie
@@ -704,12 +729,15 @@ line_design_assumptions = {
     305018: (138, 2, 2),  # TH Wharton Generating Station
     305464: (230, 2, 2),  # The Geysers
     305990: (100, 2, 1),  # southeast Salton Sea geothermal plants (several)
+    306568: (69, 2, 1),  # Geothermal in the Brawley region
     306949: (230, 2, 2),  # The Geysers
     307569: (230, 2, 2),  # The Geysers
     308434: (230, 2, 2),  # The Geysers
+    308885: (69, 2, 1),  # Geothermal in the Brawley region
     309268: (69, 2, 1),  # Ormat Brawley geothermal
     309441: (69, 2, 2),  # substation connection near Lake Creek Reservoir, outside Waco
     309966: (138, 2, 2),  # Garfield to Pilot Knob (south of Austin)
+    312199: (69, 2, 1),  # Geothermal in the Brawley region
     312241: (100, 2, 1),  # southeast Salton Sea geothermal plants (several)
     313473: (69, 2, 2),  # Holtville geothermal?
     313474: (69, 2, 2),  # Holtville geothermal?
