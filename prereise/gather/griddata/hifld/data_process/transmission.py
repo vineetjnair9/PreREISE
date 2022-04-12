@@ -546,8 +546,11 @@ def create_transformers(bus, lines, transformer_designs):
 
     :param pandas.DataFrame bus: columns 'sub_id' and 'baseKV'.
     :param pandas.DataFrame lines: columns 'from_bus_id', 'to_bus_id', and 'rateA'.
+    :param pandas.DataFrame transformer_designs: representative transformer data. Index
+        is (low_kV, high_kV), columns are 'x', 'r', and 'MVA'. 'x' and 'r' values are
+        per-unit, 'MVA' is in megawatts.
     :return: (*pandas.DataFrame*) -- each row is one transformer, columns are
-        ["from_bus_id", "to_bus_id"].
+        ["from_bus_id", "to_bus_id", "x", "r", and "rateA"].
     """
     bus_pairs = [
         (b, volt_series.sort_values().index[i + 1])
