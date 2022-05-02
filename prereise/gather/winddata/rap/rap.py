@@ -16,7 +16,7 @@ from prereise.gather.winddata.power_curves import (
 from prereise.gather.winddata.rap.noaa_api import NoaaApi
 
 
-def retrieve_data(wind_farm, start_date="2016-01-01", end_date="2016-12-31"):
+def retrieve_data(wind_farm, start_date="2021-01-01", end_date="2021-12-31"):
     """Retrieve wind speed data from NOAA's server.
 
     :param pandas.DataFrame wind_farm: plant data frame.
