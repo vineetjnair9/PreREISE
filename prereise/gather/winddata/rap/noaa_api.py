@@ -1,4 +1,5 @@
 import datetime
+from email.mime import base
 
 import requests
 
@@ -15,6 +16,8 @@ class NoaaApi:
 
     base_url = "https://www.ncei.noaa.gov/thredds/ncss/model-rap130/"
     fallback_url = "https://www.ncei.noaa.gov/thredds/ncss/model-rap130-old/"
+
+    # base_url = "https://nomads.ncdc.noaa.gov/data/rap130/"
     var_u = "u-component_of_wind_height_above_ground"
     var_v = "v-component_of_wind_height_above_ground"
 
